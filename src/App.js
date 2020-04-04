@@ -71,7 +71,6 @@ class App extends React.Component {
   };
 
   handleUpdatePost = (value) => {
-    console.log(value);
     const { postLists } = this.state;
     let index = this.searchIndex(value.id);
     if (index !== -1) {
