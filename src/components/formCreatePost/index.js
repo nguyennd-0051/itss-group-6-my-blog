@@ -1,145 +1,88 @@
 import React, { Component } from "react";
 // import AddTag from "../addTag";
-import { Tag, Input, Tooltip } from 'antd';
+import { Tag, Input, Tooltip, Button, Select } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 
-class EditableTagGroup extends Component {
-  state = {
-    tags: ['All'],
-    inputVisible: false,
-    inputValue: '',
-  };
+const { Option } = Select;
+const children = [];
 
-  handleClose = removedTag => {
-    const tags = this.state.tags.filter(tag => tag !== removedTag);
-    console.log(tags);
-    this.setState({ tags });
-  };
-
-  showInput = () => {
-    this.setState({ inputVisible: true }, () => this.input.focus());
-  };
-
-  handleInputChange = e => {
-    this.setState({ inputValue: e.target.value });
-  };
-
-  handleInputConfirm = () => {
-    const { inputValue } = this.state;
-    let { tags } = this.state;
-    if (inputValue && tags.indexOf(inputValue) === -1) {
-      tags = [...tags, inputValue];
-    }
-    console.log(tags);
-    this.setState({
-      tags,
-      inputVisible: false,
-      inputValue: '',
-    });
-  };
-
-  saveInputRef = input => (this.input = input);
-
-  render() {
-    const { tags, inputVisible, inputValue } = this.state;
-    return (
-      <div>
-        {tags.map((tag, index) => {
-          const isLongTag = tag.length > 20;
-          const tagElem = (
-            <Tag key={tag} closable={index !== 0} onClose={() => this.handleClose(tag)}>
-              {isLongTag ? `${tag.slice(0, 20)}...` : tag}
-            </Tag>
-          );
-          return isLongTag ? (
-            <Tooltip title={tag} key={tag}>
-              {tagElem}
-            </Tooltip>
-          ) : (
-            tagElem
-          );
-        })}
-        {inputVisible && (
-          <Input
-            ref={this.saveInputRef}
-            type="text"
-            size="small"
-            style={{ width: 78 }}
-            value={inputValue}
-            onChange={this.handleInputChange}
-            onBlur={this.handleInputConfirm}
-            onPressEnter={this.handleInputConfirm}
-          />
-        )}
-        {!inputVisible && (
-          <Tag className="site-tag-plus" onClick={this.showInput}>
-            <PlusOutlined /> New Tag
-          </Tag>
-        )}
-      </div>
-    );
-  }
-}
-
-class FormCreatePost extends EditableTagGroup{
+class FormCreatePost extends Component{
 	constructor(props){
 		super(props);
 		this.state = {
 			isCreatePost: false,
 			isAddTag: false,
       tmptitle: '',
-      tmpdatecreate: '',
-      tmpcontent: ''
-		};
-    // this.createPost = this.createPost.bind(this);
-	}
+      tmpcontent: '',
+      tmpSelectedTag: []
+    };
+  }
+
+  componentDidMount() {
+    this.props.tagList.forEach((tag, index) => {
+      console.log(index);
+      console.log(tag);
+      if(tag!=='All') children.push(<Option key={index} value={tag}>{tag}</Option>);
+    });
+  }
+
+  componentDidUpdate() {
+    children.length=0;
+    this.props.tagList.forEach((tag, index) => {
+      // console.log(this.props.tagList);
+      if(tag!=='All') children.push(<Option key={index} value={tag}>{tag}</Option>);
+    });
+  }
+  
+
+  handleChange = (value) => {
+    console.log(value);
+    this.setState({tmpSelectedTag: value});
+  }
+  
   handleTitleChange = (e) => {
     this.setState({tmptitle: e.target.value});
   }
-  handleDateCreateChange = (e) => {
-    this.setState({tmpdatecreate: e.target.value});
-  }
+ 
   handleContentChange = (e) => {
     this.setState({tmpcontent: e.target.value});
   }
-	createPost = (e) => {
-    e.preventDefault();
-		this.setState({isCreatePost: true});
-    this.props.createPost(this.state);
-
-	}
+  
 	cancelPost = () => {
 		this.setState({isCreatePost: false});
 	}
 	// changeTagtoTrue = () => {
 	// 	this.setState({isAddTag: true});
-	// }
+  // }
+  handleSubmit = (e) => {
+    const {tmptitle, tmpcontent, tmpSelectedTag} = this.state;
+    e.preventDefault();
+
+    let value = {
+      title: tmptitle,
+      content: tmpcontent,
+      selectedTag: tmpSelectedTag
+    }
+    this.props.createPost(value);
+    this.setState({
+      isCreatePost: false,
+      isAddTag: false,
+      tmpcontent: '',
+      tmptitle: '',
+      tmpSelectedTag: []
+    })
+  }  
+
+  toggleForm = () => {
+    this.setState({
+      isCreatePost: true,
+    })
+  }
 	render(){
 		let createform = '';
-		if (this.state.isCreatePost === true){
-			if (this.state.isAddTag === false){
-				createform ='';
-				// <div>
-				// 	<p> Hiển thị button Add Tag và button submit </p>
-				// 	<button type="button" onClick={this.changeTagtoTrue}>Add Tag</button>
-        //   <button type="button" >Submit ở đây là lưu luôn nhể</button>
-        //   <br></br>
-        //   Title: {this.state.tmptitle} <br></br>
-        //   Date Create: {this.state.tmpdatecreate} <br></br>
-        //   Content: {this.state.tmpcontent} <br></br>
-        //
-				// </div>;
-			}
-			else {
-				createform ='';
-				// <div>
-					// <p> Hiển thị form tạo Tag </p>
-					// <button type="button" onClick={this.cancelPost}>Cancel</button>
-          // {this.props.postLists}
-				// </div>
-			}
-		}
-		else {
+		if (this.state.isCreatePost === false){
+      createform = <button type="button" onClick={this.toggleForm}>Create Post</button>
+    }else {
 			createform =
       <div
         id="exampleModalCenter"
@@ -155,7 +98,7 @@ class FormCreatePost extends EditableTagGroup{
                 Create Post
               </h5>
             </div>
-            <form onSubmit={this.onHandleSubmit}>
+            <form onSubmit={this.handleSubmit}>
               <div className="modal-body">
                 <div className="form-group">
                   <label htmlFor="name">Title:</label>
@@ -169,17 +112,6 @@ class FormCreatePost extends EditableTagGroup{
                     onChange={this.handleTitleChange}
                     value={this.state.title}
                   />
-                  <label htmlFor="name">Date Create:</label>
-                  <input
-                    type="text"
-                    name="datecreate"
-                    id="datecreate"
-                    className="form-control"
-                    placeholder="Enter date create"
-                    aria-describedby="helpId"
-                    onChange={this.handleDateCreateChange}
-                    value={this.state.datecreate}
-                  />
                   <label htmlFor="name">Content:</label>
                   <input
                     type="text"
@@ -192,14 +124,22 @@ class FormCreatePost extends EditableTagGroup{
                     value={this.state.content}
                   />
                 </div>
-                <EditableTagGroup/>
+                <Select mode="tags" style={{ width: '100%' }} placeholder="Tags Mode" onChange={this.handleChange}>
+                  {children}
+                </Select>
               </div>
 
               <div className="modal-footer">
+                <button 
+                type="cancel"
+                className="btn btn-outline-danger"
+                onClick={this.cancelPost}
+                >
+                  Cancel
+                </button>
                 <button
                   type="submit"
                   className="btn btn-outline-success"
-                  onClick={this.createPost}
                 >
                   Create
                 </button>
