@@ -2,35 +2,54 @@ import React from "react";
 import AddTag from "./components/addTag";
 import FormUpdatePost from "./components/formUpdatePost";
 import FormCreatePost from "./components/formCreatePost";
+import FormUpdateInfo from "./views/FormUpdateInfo"
+import PersonalInfo from "./views/PersonalInfo"
 import "./App.css";
 
 class App extends React.Component {
-  state = {
-    tagList: ["all"],
-    isAddTag: false,
-    isUpdatePost: false,
-    isCreatePost: false,
-    postLists: [
-      {
-        id: 1,
-        title: "new title1",
-        dateCreate: "new dateCreate1",
-        content: "new content1",
+  constructor() {
+    super();
+    this.state = {
+      userInfo: {
+        name: "Bao Hieu",
+        age: 18,
+        position: "Data Scientist",
+        company: "Google",
+        technology: "Python, NodeJS, ReactJS",
+        hobby: "Reading Books, Travel"
       },
-      {
-        id: 2,
-        title: "new title2",
-        dateCreate: "new dateCreate2",
-        content: "new content2",
-      },
-      {
-        id: 3,
-        title: "new title3",
-        dateCreate: "new dateCreate3",
-        content: "new content3",
-      },
-    ],
-  };
+      tagList: ["all"],
+      isAddTag: false,
+      isUpdatePost: false,
+      isCreatePost: true,
+      postLists: [
+        {
+          id: 1,
+          title: "new title1",
+          dateCreate: "new dateCreate1",
+          content: "new content1",
+        },
+        {
+          id: 2,
+          title: "new title2",
+          dateCreate: "new dateCreate2",
+          content: "new content2",
+        },
+        {
+          id: 3,
+          title: "new title3",
+          dateCreate: "new dateCreate3",
+          content: "new content3",
+        },
+      ],
+    };
+
+    this.onUpdatePersonalInfo = this.onUpdatePersonalInfo.bind(this);
+  }
+
+  onUpdatePersonalInfo(newInfo) {
+    this.setState({ userInfo: newInfo });
+  }
 
   handleAddTag = (value) => {
     this.state.tagList.push(value);
@@ -146,7 +165,13 @@ class App extends React.Component {
       <div>
         {this.onToggleAddTag()}
         {this.onToggleFormUpdatePost()}
-        {this.onToggleFormCreatePost()}
+        {this.onToggleFormCreatePost()} 
+        <div>
+        <PersonalInfo
+          userInfo={this.state.userInfo}
+          onSubmitUpdate={(values) => this.onUpdatePersonalInfo(values)}
+        />
+      </div>
       </div>
     );
   }
