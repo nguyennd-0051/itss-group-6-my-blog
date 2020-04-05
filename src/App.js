@@ -4,8 +4,12 @@ import FormUpdatePost from "./components/formUpdatePost";
 import FormCreatePost from "./components/formCreatePost";
 import FormUpdateInfo from "./views/FormUpdateInfo"
 import PersonalInfo from "./views/PersonalInfo"
+import Post from "./Post"
 import "./App.css";
+import { Layout, Menu, Breadcrumb } from 'antd';
 
+const { Header, Content, Footer } = Layout;
+const dateFormat = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 class App extends React.Component {
   constructor() {
     super();
@@ -18,51 +22,43 @@ class App extends React.Component {
         technology: "Python, NodeJS, ReactJS",
         hobby: "Reading Books, Travel"
       },
-      tagList: ["all"],
+      tagList: ["All","React","Blockchain"],
       isAddTag: false,
       isUpdatePost: false,
       isCreatePost: true,
+      currentPage: 1,
       postLists: [
         {
           id: 1,
           title: "new title1",
-          dateCreate: "new dateCreate1",
+          dateCreate: new Date().toLocaleString('ja-JP',dateFormat),
           content: "new content1",
+          selectedTag: ["React", "Blockchain"],
         },
         {
           id: 2,
           title: "new title2",
-          dateCreate: "new dateCreate2",
+          dateCreate: new Date().toLocaleString('ja-JP',dateFormat),
           content: "new content2",
+          selectedTag: ["React"],
         },
         {
           id: 3,
           title: "new title3",
-          dateCreate: "new dateCreate3",
+          dateCreate: new Date().toLocaleString('ja-JP',dateFormat),
           content: "new content3",
+          selectedTag: ["Blockchain"],
         },
       ],
     };
 
     this.onUpdatePersonalInfo = this.onUpdatePersonalInfo.bind(this);
+    this.handleCreatePost = this.handleCreatePost.bind(this);
   }
 
   onUpdatePersonalInfo(newInfo) {
     this.setState({ userInfo: newInfo });
   }
-
-  handleAddTag = (value) => {
-    this.state.tagList.push(value);
-    this.setState({
-      tagList: this.state.tagList,
-    });
-  };
-
-  handleCloseFormAddTag = (value) => {
-    this.setState({
-      isAddTag: value,
-    });
-  };
 
   onToggleAddTag = () => {
     let result = null;
@@ -109,28 +105,29 @@ class App extends React.Component {
       });
     }
   };
+
   findMaxIndex = () => {
-    let result = -1;
-    this.state.postLists.forEach((postList, index) => {
-      result = result +1;
-    });
-    return result;
-  };
+    const { postLists } = this.state;
+    let idArray = postLists.map(post => post.id);
+    
+    return Math.max(...idArray);
+  }
 
   handleCreatePost = (value) => {
-    const { postLists } = this.state;
+    const { postLists,tagList } = this.state;
+    let newTagList = [...new Set([...tagList, ...value.selectedTag])];
     let index = this.findMaxIndex();
-      this.setState({
-        postLists: [
-          ...postLists.slice(0, index +1),
-          {
-            id: index + 1,
-            title: value.tmptitle,
-            dateCreate: value.tmpdatecreate,
-            content: value.tmpcontent,
-          }
-        ],
-      });
+    const newData = postLists.concat([{
+      id: index + 1,
+      title: value.title,
+      dateCreate: new Date().toLocaleString('ja-JP',dateFormat),
+      content: value.content,
+      selectedTag: value.selectedTag,
+    }]);
+    this.setState({
+      postLists: newData,
+      tagList: newTagList,
+    });
   };
 
   onToggleFormUpdatePost = () => {
@@ -160,19 +157,53 @@ class App extends React.Component {
     return result;
   };
 
+  deletePost = (value) => {
+    const {postLists} = this.state;
+    const newData = postLists.filter((post) => post!==value);
+    this.setState({postLists: newData});
+  }
+
+  renderPostList = () => {
+    const {postLists} = this.state;
+
+    return (postLists.map((post,index) => (
+      <Post
+        key={index}
+        post={post}
+        onClick={() => this.deletePost(post)}
+      />
+  )));
+  }
+
   render() {
     return (
-      <div>
-        {this.onToggleAddTag()}
-        {this.onToggleFormUpdatePost()}
-        {this.onToggleFormCreatePost()} 
-        <div>
-        <PersonalInfo
-          userInfo={this.state.userInfo}
-          onSubmitUpdate={(values) => this.onUpdatePersonalInfo(values)}
-        />
-      </div>
-      </div>
+      <Layout className="layout">
+        <Header>
+          <div className="logo" />
+          <Menu theme="dark" mode="horizontal" defaultSelectedKeys={['1']}>
+            <Menu.Item key="1">My Profile</Menu.Item>
+            <Menu.Item key="2" onClick={this.onToggleFormUpdatePost()}>Posts</Menu.Item>
+            <Menu.Item key="3">Create Post</Menu.Item>
+          </Menu>
+        </Header>
+        <Content style={{ padding: '0 50px' }}>
+          <div className="site-layout-content">Content</div>
+          <div>    
+            <PersonalInfo
+              userInfo={this.state.userInfo}
+              onSubmitUpdate={(values) => this.onUpdatePersonalInfo(values)}
+            />
+      
+            <FormCreatePost
+              createPost={this.handleCreatePost}
+              postLists={this.state.postLists}
+              tagList={this.state.tagList}
+            />
+            {this.renderPostList()}
+          </div>
+        </Content>
+        <Footer style={{ textAlign: 'center' }}>Group6 ©2020 ITSS</Footer>
+      </Layout>
     );
   }
 }
