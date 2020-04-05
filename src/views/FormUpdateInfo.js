@@ -20,9 +20,6 @@ const validateMessages = {
   types: {
     number: "${label} is not a validate number!",
   },
-  number: {
-    range: "${label} must be bigger than ${min}",
-  },
 };
 
 class FormUpdateInfo extends Component {
@@ -42,38 +39,46 @@ class FormUpdateInfo extends Component {
         <Form
           {...layout}
           name="control-ref"
+          initialValues={{
+            name: this.userInfo.name,
+            age: this.userInfo.age,
+            position: this.userInfo.position,
+            company: this.userInfo.company,
+            technology: this.userInfo.technology,
+            hobby: this.userInfo.hobby,
+          }}
           onFinish={this.onFinish}
           validateMessages={validateMessages}
         >
-          <Form.Item label="Full Name" name="name" rules={[{ required: true }]}>
-            <Input defaultValue={this.userInfo.name} />
+          <Form.Item label="Name" name="name" rules={[{ required: true }]}>
+            <Input />
           </Form.Item>
           <Form.Item label="Age" name="age" rules={[{ required: true }]}>
-            <InputNumber min={1} defaultValue={this.userInfo.age} />
+            <InputNumber min={1} />
           </Form.Item>
           <Form.Item
             label="Position"
             name="position"
             rules={[{ required: true }]}
           >
-            <Input defaultValue={this.userInfo.position} />
+            <Input />
           </Form.Item>
           <Form.Item
             label="Company"
             name="company"
             rules={[{ required: true }]}
           >
-            <Input defaultValue={this.userInfo.company} />
+            <Input />
           </Form.Item>
           <Form.Item
             label="Technology"
             name="technology"
             rules={[{ required: true }]}
           >
-            <Input defaultValue={this.userInfo.technology} />
+            <Input />
           </Form.Item>
           <Form.Item label="Hobby" name="hobby" rules={[{ required: true }]}>
-            <Input.TextArea defaultValue={this.userInfo.hobby} />
+            <Input.TextArea />
           </Form.Item>
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit">
@@ -87,3 +92,4 @@ class FormUpdateInfo extends Component {
 }
 
 export default FormUpdateInfo;
+// export default Form.create()(FormUpdateInfo);
