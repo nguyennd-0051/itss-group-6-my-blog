@@ -6,19 +6,17 @@ import './App.css';
 class App extends Component {
   constructor(props){
     super(props);
+
     this.state = {
       taglist : [
         {
           tag: "#comedy",
-          cur: false,
-          color: ' black'
         },
         {
           tag: "#la",
-          cur: false,
-          color: 'black'
         }
-      ]
+      ],
+      current: null
     }
     this.MarkCurrent = this.MarkCurrent.bind(this);
     this.handleAddTag = this.handleAddTag.bind(this);
@@ -30,12 +28,9 @@ class App extends Component {
   };
 
   MarkCurrent = index => {
-    var select = this.state.taglist[index]
-    this.state.taglist.splice(index, 1);
-    select.cur = !select.cur; 
-    select.cur ? this.state.taglist.push(select) : this.state.taglist.unshift(select);
+    this.state.current = this.state.taglist[index]
     this.setState({ taglist: this.state.taglist });
-
+    this.setState({ current: this.state.current });
   };
   
 
@@ -46,7 +41,6 @@ class App extends Component {
         result = <TagListItem
                   key={index}
                   tag={item.tag}
-                  cur={item.cur}
                   onClick={() => this.MarkCurrent(index)}
                 />
       }

@@ -23,7 +23,6 @@ class SubmitForm extends Component {
         this.props.onAddTag(this.state)
         this.setState({
           tag: "",
-          cur: false
         })
       event.preventDefault();
     }
