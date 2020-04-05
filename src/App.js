@@ -1,6 +1,7 @@
 import React from "react";
 import AddTag from "./components/addTag";
 import FormUpdatePost from "./components/formUpdatePost";
+import FormCreatePost from "./components/formCreatePost";
 import "./App.css";
 
 class App extends React.Component {
@@ -8,6 +9,7 @@ class App extends React.Component {
     tagList: ["all"],
     isAddTag: false,
     isUpdatePost: false,
+    isCreatePost: false,
     postLists: [
       {
         id: 1,
@@ -88,6 +90,29 @@ class App extends React.Component {
       });
     }
   };
+  findMaxIndex = () => {
+    let result = -1;
+    this.state.postLists.forEach((postList, index) => {
+      result = result +1;
+    });
+    return result;
+  };
+
+  handleCreatePost = (value) => {
+    const { postLists } = this.state;
+    let index = this.findMaxIndex();
+      this.setState({
+        postLists: [
+          ...postLists.slice(0, index +1),
+          {
+            id: index + 1,
+            title: value.tmptitle,
+            dateCreate: value.tmpdatecreate,
+            content: value.tmpcontent,
+          }
+        ],
+      });
+  };
 
   onToggleFormUpdatePost = () => {
     let result = null;
@@ -103,12 +128,25 @@ class App extends React.Component {
       : (result = "");
     return result;
   };
+  onToggleFormCreatePost = () => {
+    let result = null;
+    this.state.isCreatePost
+      ? (result = (
+          <FormCreatePost
+            createPost={this.handleCreatePost}
+            postLists={this.state.postLists}
+          />
+        ))
+      : (result = "");
+    return result;
+  };
 
   render() {
     return (
       <div>
         {this.onToggleAddTag()}
         {this.onToggleFormUpdatePost()}
+        {this.onToggleFormCreatePost()}
       </div>
     );
   }
