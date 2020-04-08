@@ -4,19 +4,20 @@ import { Tag, Input, Tooltip, Button, Select } from 'antd';
 
 const { Option } = Select;
 const children = [];
+const defaultTags = [];
 
 class FormUpdatePost extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      id: -1,
+      title: "",
+      // dateCreate: "",
+      content: "",
+      selectedTag: []
+    };
     this.loadData();
   }
-  state = {
-    id: -1,
-    title: "",
-    // dateCreate: "",
-    content: "",
-    selectedTag: []
-  };
 
   searchIndex = (id) => {
     let result = -1;
@@ -61,11 +62,21 @@ class FormUpdatePost extends Component {
   };
 
   loadData = () => {
+    const { postLists } = this.props;
     children.length = 0;
+    defaultTags.length = 0;
     this.props.tagList.forEach((tag, index) => {
       if(tag!=='All') children.push(<Option key={index} value={tag}>{tag}</Option>);
     });
+
+    let index = this.searchIndex(this.props.id);
+    if(index !== -1) {
+      postLists[index].selectedTag.forEach((tag,index) => {
+        defaultTags.push(tag);
+      });
+    };
   }
+  
 
   handleChange = (value) => {
     this.setState({selectedTag: value});
@@ -124,7 +135,14 @@ class FormUpdatePost extends Component {
                     value={this.state.content}
                   />
                 </div>
-                <Select size="large" mode="tags" style={{ width: '100%' }} placeholder="Select Tag" onChange={this.handleChange}>
+                <Select
+                  size="large" 
+                  mode="tags" 
+                  style={{ width: '100%' }} 
+                  placeholder="Select Tag" 
+                  onChange={this.handleChange}
+                  defaultValue={defaultTags}
+                >
                     {children}
                   </Select>
               </div>
