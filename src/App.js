@@ -49,9 +49,9 @@ class App extends React.Component {
     super();
     this.state = {
       userInfo: {
-        name: "Bao Hieu",
+        name: "Duy Nguyen",
         age: 18,
-        position: "Data Scientist",
+        position: "BrSE",
         company: "Google Inc.",
         technology: "Python, NodeJS, ReactJS",
         hobby: "Reading Books, Travel"
@@ -126,19 +126,6 @@ class App extends React.Component {
     }
     this.setState({ filterTagList: nextSelectedTags });
   }
-
-  onToggleAddTag = () => {
-    let result = null;
-    this.state.isAddTag
-      ? (result = (
-          <AddTag
-            closeFormAddTag={this.handleCloseFormAddTag}
-            addTag={this.handleAddTag}
-          />
-        ))
-      : (result = "");
-    return result;
-  };
 
   handleCloseFormUpdatePost = (value) => {
     this.setState({
@@ -237,7 +224,7 @@ class App extends React.Component {
 
   renderPostList = (filterTagList) => {
     const {postLists} = this.state;
-    let renderPostList;
+    let renderPostList = [];
     if (filterTagList.length == 1 && filterTagList[0] == "All") {
       renderPostList = postLists;
     } else {
