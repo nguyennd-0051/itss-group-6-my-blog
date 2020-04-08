@@ -1,25 +1,25 @@
 {
   "files": {
     "main.css": "/itss_group6_blog/static/css/main.5fd50384.chunk.css",
-    "main.js": "/itss_group6_blog/static/js/main.59543a2d.chunk.js",
-    "main.js.map": "/itss_group6_blog/static/js/main.59543a2d.chunk.js.map",
-    "runtime-main.js": "/itss_group6_blog/static/js/runtime-main.70735d75.js",
-    "runtime-main.js.map": "/itss_group6_blog/static/js/runtime-main.70735d75.js.map",
-    "static/css/2.297af936.chunk.css": "/itss_group6_blog/static/css/2.297af936.chunk.css",
-    "static/js/2.a5ec1a2f.chunk.js": "/itss_group6_blog/static/js/2.a5ec1a2f.chunk.js",
-    "static/js/2.a5ec1a2f.chunk.js.map": "/itss_group6_blog/static/js/2.a5ec1a2f.chunk.js.map",
+    "main.js": "/itss_group6_blog/static/js/main.7355f276.chunk.js",
+    "main.js.map": "/itss_group6_blog/static/js/main.7355f276.chunk.js.map",
+    "runtime-main.js": "/itss_group6_blog/static/js/runtime-main.581c4586.js",
+    "runtime-main.js.map": "/itss_group6_blog/static/js/runtime-main.581c4586.js.map",
+    "static/css/2.759ec102.chunk.css": "/itss_group6_blog/static/css/2.759ec102.chunk.css",
+    "static/js/2.2d13850b.chunk.js": "/itss_group6_blog/static/js/2.2d13850b.chunk.js",
+    "static/js/2.2d13850b.chunk.js.map": "/itss_group6_blog/static/js/2.2d13850b.chunk.js.map",
     "index.html": "/itss_group6_blog/index.html",
-    "precache-manifest.7768ae4cfea672ab62d1ac4c5a244309.js": "/itss_group6_blog/precache-manifest.7768ae4cfea672ab62d1ac4c5a244309.js",
+    "precache-manifest.e9d492c21e6449fe4a5e49e35cffb8bf.js": "/itss_group6_blog/precache-manifest.e9d492c21e6449fe4a5e49e35cffb8bf.js",
     "service-worker.js": "/itss_group6_blog/service-worker.js",
-    "static/css/2.297af936.chunk.css.map": "/itss_group6_blog/static/css/2.297af936.chunk.css.map",
+    "static/css/2.759ec102.chunk.css.map": "/itss_group6_blog/static/css/2.759ec102.chunk.css.map",
     "static/css/main.5fd50384.chunk.css.map": "/itss_group6_blog/static/css/main.5fd50384.chunk.css.map",
-    "static/js/2.a5ec1a2f.chunk.js.LICENSE.txt": "/itss_group6_blog/static/js/2.a5ec1a2f.chunk.js.LICENSE.txt"
+    "static/js/2.2d13850b.chunk.js.LICENSE.txt": "/itss_group6_blog/static/js/2.2d13850b.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.70735d75.js",
-    "static/css/2.297af936.chunk.css",
-    "static/js/2.a5ec1a2f.chunk.js",
+    "static/js/runtime-main.581c4586.js",
+    "static/css/2.759ec102.chunk.css",
+    "static/js/2.2d13850b.chunk.js",
     "static/css/main.5fd50384.chunk.css",
-    "static/js/main.59543a2d.chunk.js"
+    "static/js/main.7355f276.chunk.js"
   ]
 }
