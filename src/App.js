@@ -217,7 +217,6 @@ class App extends React.Component {
   renderPostList = (filterTagList) => {
     const {postLists} = this.state;
     let renderPostList;
-    console.log(filterTagList);
     if (filterTagList.length == 1 && filterTagList[0] == "All") {
       renderPostList = postLists;
     } else {

@@ -23,11 +23,9 @@ class FormCreatePost extends Component{
     this.props.tagList.forEach((tag, index) => {
       if(tag!=='All') children.push(<Option key={index} value={tag}>{tag}</Option>);
     });
-    console.log(children);
   }
 
   handleChange = (value) => {
-    console.log(value);
     this.setState({tmpSelectedTag: value});
   }
   
