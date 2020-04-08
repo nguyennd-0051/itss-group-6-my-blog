@@ -57,7 +57,7 @@ class App extends React.Component {
       tagList: exampleTagList, //initial value must have tag "All" 
       filterTagList: ["All"],
       isAddTag: false,
-      isUpdatePost: true,
+      isUpdatePost: false,
       isCreatePost: true,
       currentPage: 'index',
       postLists: [
