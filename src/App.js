@@ -12,6 +12,7 @@ import {
   EditOutlined,
   GitlabOutlined,
 } from '@ant-design/icons';
+import TagList from "./TagList";
 
 const { CheckableTag } = Tag;
 const exampleContent1 = 
@@ -34,6 +35,11 @@ const exampleContent3 =
 `One of the more popular frugal blogs in the UK, Miss Thrifty is targeting young mums with her money saving, frugal tips and articles. And rightly so! The market is massive and she’s meeting a need for this type of information. Young mums aren’t exactly rolling in cash. They may have had to give up work and are now relying on just one wage coming in, so the need to be more frugal with everyday living is a must.
 
 The great thing about this blog is the conversational tone and the real person behind the brand. I think it’s inspiring to other mums to see someone like them making such a difference in other people’s lives by creating amazingly useful content that is 100% actionable. Also it may inspire mums to set up their own blog and to write about their experiences as a mother and a wife in the 21st century.`
+const exampleContent4 = 
+`Medium is not like any other platform on the internet. Our sole purpose is to help you find compelling ideas, knowledge, and perspectives. We don’t serve ads—we serve you, the curious reader who loves to learn new things. Medium is home to thousands of independent voices, and we combine humans and technology to find the best reading for you—and filter out the rest.I love Medium’s new publications: OneZero, GEN, Heated. And, I’m especially excited about Tenderly.
+In a web full of pseudo thought-leaders, Medium is the one place that I can reliably come to and be better informed in the easiest way possible of the things that matter to me.
+`
+const exampleTagList = ["All","React","Blockchain","PHP","BrSE","AI"]
 const { Header, Content, Footer } = Layout;
 const dateFormat = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 class App extends React.Component {
@@ -48,10 +54,10 @@ class App extends React.Component {
         technology: "Python, NodeJS, ReactJS",
         hobby: "Reading Books, Travel"
       },
-      tagList: ["All","React","Blockchain"],
+      tagList: exampleTagList, //initial value must have tag "All" 
       filterTagList: ["All"],
       isAddTag: false,
-      isUpdatePost: false,
+      isUpdatePost: true,
       isCreatePost: true,
       currentPage: 'index',
       postLists: [
@@ -60,7 +66,7 @@ class App extends React.Component {
           title: "new title1",
           dateCreate: new Date('December 17, 2018 03:24:00').toLocaleString('ja-JP',dateFormat),
           content: exampleContent1,
-          selectedTag: ["React", "Blockchain"],
+          selectedTag: ["React", "Blockchain","AI"],
         },
         {
           id: 2,
@@ -76,11 +82,19 @@ class App extends React.Component {
           content: exampleContent3,
           selectedTag: ["Blockchain"],
         },
+        {
+          id: 4,
+          title: "new title3",
+          dateCreate: new Date('March 11, 2020 09:14:00').toLocaleString('ja-JP',dateFormat),
+          content: exampleContent4,
+          selectedTag: ["AI","BrSE"],
+        },
       ],
     };
 
     this.onUpdatePersonalInfo = this.onUpdatePersonalInfo.bind(this);
     this.handleCreatePost = this.handleCreatePost.bind(this);
+    this.handleChangeFilterTag = this.handleChangeFilterTag.bind(this);
   }
 
   onUpdatePersonalInfo(newInfo) {
@@ -163,7 +177,7 @@ class App extends React.Component {
   }
 
   handleCreatePost = (value) => {
-    const { postLists, tagList, currentPage } = this.state;
+    const { postLists, tagList } = this.state;
     let newTagList = [...new Set([...tagList, ...value.selectedTag])];
     let index = this.findMaxIndex();
     const newData = postLists.concat([{
@@ -269,7 +283,7 @@ class App extends React.Component {
           : null
         }
 
-        <Content style={{ padding: '0 200px', marginTop: 0 }}>  
+        <Content style={{ padding: '0 200px', marginTop: 0, minHeight: '90vh' }}>  
           <div className="site-layout-content">
             {this.state.currentPage == 'profile' ?
               <PersonalInfo
@@ -290,19 +304,13 @@ class App extends React.Component {
           
             {this.state.currentPage == 'index' ? 
               <>
-              <div>
-                <span style={{ marginRight: 8 }}>Categories:</span>
-                {this.state.tagList.map(tag => (
-                  <CheckableTag
-                    key={tag}
-                    checked={this.state.filterTagList.indexOf(tag) > -1}
-                    onChange={checked => this.handleChangeFilterTag(tag, checked)}
-                  >
-                    {tag}
-                  </CheckableTag>
-                ))}
-              </div>
+              <TagList
+                tagList = {this.state.tagList}
+                filterTagList = {this.state.filterTagList}
+                handleChangeFilterTag = {this.handleChangeFilterTag}
+              />
               {this.renderPostList(this.state.filterTagList)}
+              {this.onToggleFormUpdatePost()}
               </>
               : null
             }

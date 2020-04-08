@@ -1,24 +1,9 @@
 import React, { Component } from 'react';
-import { Card, Tag, PageHeader, Menu, Dropdown, Button, Typography, Row } from 'antd';
+import { Card, Tag, PageHeader, Button, Typography, Row } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { EllipsisOutlined } from '@ant-design/icons';
 import "./Post.css";
-const { CheckableTag } = Tag;
-const { Paragraph } = Typography;
 
-const content = (
-  <>
-    <Paragraph>
-      Ant Design interprets the color system into two levels: a system-level color system and a
-      product-level color system.
-    </Paragraph>
-    <Paragraph>
-      Ant Design&#x27;s design team preferred to design with the HSB color model, which makes it
-      easier for designers to have a clear psychological expectation of color when adjusting colors,
-      as well as facilitate communication in teams.
-    </Paragraph>
-  </>
-);
+const { Paragraph } = Typography;
 
 const Content = ({ children, extraContent }) => {
   return (
