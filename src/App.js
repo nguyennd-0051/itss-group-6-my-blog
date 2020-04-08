@@ -77,6 +77,7 @@ class App extends React.Component {
           selectedTag: ["Blockchain"],
         },
       ],
+      idUpdatePost: -1
     };
 
     this.onUpdatePersonalInfo = this.onUpdatePersonalInfo.bind(this);
@@ -131,7 +132,7 @@ class App extends React.Component {
   searchIndex = (id) => {
     let result = -1;
     this.state.postLists.forEach((postList, index) => {
-      if (postList.id === id) result = index + 1;
+      if (postList.id === id) result = index;
     });
     return result;
   };
@@ -146,8 +147,9 @@ class App extends React.Component {
           {
             id: value.id,
             title: value.title,
-            dateCreate: value.dateCreate,
+            dateCreate: new Date().toLocaleString('ja-JP',dateFormat),
             content: value.content,
+            selectedTag: value.selectedTag
           },
           ...postLists.slice(index + 1),
         ],
@@ -187,13 +189,15 @@ class App extends React.Component {
           <FormUpdatePost
             closeFormUpdatePost={this.handleCloseFormUpdatePost}
             updatePost={this.handleUpdatePost}
-            id={1}
+            id={this.state.idUpdatePost}
             postLists={this.state.postLists}
+            tagList={this.state.tagList}
           />
         ))
       : (result = "");
     return result;
   };
+
   onToggleFormCreatePost = () => {
     let result = null;
     this.state.isCreatePost
@@ -227,6 +231,7 @@ class App extends React.Component {
       <Post
         key={index}
         post={post}
+        createPost={(value1, value2) => this.setState({ isUpdatePost: value1, idUpdatePost: value2})}
         onClick={() => this.deletePost(post)}
       />
   )));
@@ -288,7 +293,7 @@ class App extends React.Component {
               : null
             }
           
-            {this.state.currentPage == 'index' ? 
+            {this.state.currentPage == 'index' && !this.state.isUpdatePost ? 
               <>
               <div>
                 <span style={{ marginRight: 8 }}>Categories:</span>
@@ -304,10 +309,10 @@ class App extends React.Component {
               </div>
               {this.renderPostList(this.state.filterTagList)}
               </>
-              : null
+              : <div>{this.onToggleFormUpdatePost()}</div>
             }
-            
           </div>
+          
         </Content>
         <Footer style={{ textAlign: 'center' }}>Group6 ©2020 ITSS</Footer>
       </Layout>

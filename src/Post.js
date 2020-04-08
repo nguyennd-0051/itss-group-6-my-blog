@@ -30,13 +30,16 @@ const Content = ({ children, extraContent }) => {
 };
 
 class Post extends Component {
+
+  createPost = (value) => {
+    this.props.createPost(true, value);
+  }
   
   render() {
     const {
       post,
       ...props
     } = this.props;
-
   
     return (
       <PageHeader
@@ -54,7 +57,7 @@ class Post extends Component {
           </Tag>
         ))}
         extra={[
-          <Button key="edit"><EditOutlined /></Button>,
+          <Button key="edit" onClick={() => this.createPost(this.props.post.id)}><EditOutlined /></Button>,
           <Button key="delete" {...props}>
             <DeleteOutlined />
           </Button>,
