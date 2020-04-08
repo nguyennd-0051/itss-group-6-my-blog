@@ -68,14 +68,14 @@ class App extends React.Component {
           title: "Master AI in 2 hours",
           dateCreate: new Date('December 17, 2018 03:24:00').toLocaleString('ja-JP',dateFormat),
           content: exampleContent1,
-          selectedTag: ["React", "Blockchain","AI"],
+          selectedTag: ["AI"],
         },
         {
           id: 2,
           title: "Become BrSE - A bright future for developer",
           dateCreate: new Date('January 14, 2020 09:40:00').toLocaleString('ja-JP',dateFormat),
           content: exampleContent2,
-          selectedTag: ["React"],
+          selectedTag: ["React","BrSE"],
         },
         {
           id: 3,
@@ -230,8 +230,8 @@ class App extends React.Component {
     } else {
       renderPostList = postLists.filter(post => (post.selectedTag.filter((tag) => filterTagList.includes(tag)).length > 0));
     }
-
-    return (renderPostList.reverse().map((post,index) => (
+    renderPostList = renderPostList.slice().sort((a, b) => b.dateCreate - a.dateCreate)
+    return (renderPostList.map((post,index) => (
       <Post
         key={index}
         post={post}
@@ -271,13 +271,14 @@ class App extends React.Component {
             <Avatar size={200} src='https://avatars1.githubusercontent.com/u/60763388?s=460&u=1011ca50a99ede598aef7569fc793ce1e4d6f5ce&v=4' style={{display: 'inline-block', verticalAlign: 'middle', marginTop: '-100px', border: '2px solid white'}}/>
           </div>
           <div className="ml-auto mr-auto text-center col-md-6">
-          <h1>{this.state.userInfo.name}</h1>
-          <h3 className="text-uppercase">{this.state.userInfo.position}</h3>
-          <h4 className="font-weight-light">{this.state.userInfo.company}</h4>
-          <br/>
-          <h3>Enjoy Reading!</h3>
+            <h1>{this.state.userInfo.name}</h1>
+            <h3 className="text-uppercase">{this.state.userInfo.position}</h3>
+            <h4 className="font-weight-light">{this.state.userInfo.company}</h4>
+            <br/>
+            <h3>Enjoy Reading!</h3>
+            <br />
+            <br />
           </div>
-          
           </>
           : null
         }

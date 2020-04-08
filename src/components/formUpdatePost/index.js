@@ -36,7 +36,7 @@ class FormUpdatePost extends Component {
         title: postLists[index].title,
         // dateCreate: postLists[index].dateCreate,
         content: postLists[index].content,
-        // selectedTag: postLists[index].selectedTag,
+        selectedTag: defaultTags,
       });
     }
   }

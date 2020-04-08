@@ -1,4 +1,7 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Available Demo at:
+
+http://nguyennd-0051.github.io/itss_group6_blog
 
 ## Available Scripts
 

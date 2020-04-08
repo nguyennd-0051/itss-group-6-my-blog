@@ -7,8 +7,8 @@ class TagList extends Component {
   
   render() {
     return (
-      <div>
-        <span style={{ marginRight: 8 }}>Categories:</span>
+      <div className="text-center">
+        <span style={{ marginRight: 8 }}>Tag:</span>
         {this.props.tagList.map(tag => (
           <CheckableTag
             key={tag}
