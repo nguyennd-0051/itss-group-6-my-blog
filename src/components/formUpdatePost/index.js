@@ -1,11 +1,21 @@
 import React, { Component } from "react";
+import './FormUpdatePost.css';
+import { Tag, Input, Tooltip, Button, Select } from 'antd';
+
+const { Option } = Select;
+const children = [];
 
 class FormUpdatePost extends Component {
+  constructor(props) {
+    super(props);
+    this.loadData();
+  }
   state = {
     id: -1,
     title: "",
-    dateCreate: "",
+    // dateCreate: "",
     content: "",
+    selectedTag: []
   };
 
   searchIndex = (id) => {
@@ -23,8 +33,9 @@ class FormUpdatePost extends Component {
       this.setState({
         id: index + 1,
         title: postLists[index].title,
-        dateCreate: postLists[index].dateCreate,
+        // dateCreate: postLists[index].dateCreate,
         content: postLists[index].content,
+        // selectedTag: postLists[index].selectedTag,
       });
     }
   }
@@ -49,17 +60,27 @@ class FormUpdatePost extends Component {
     this.props.closeFormUpdatePost(false);
   };
 
+  loadData = () => {
+    children.length = 0;
+    this.props.tagList.forEach((tag, index) => {
+      if(tag!=='All') children.push(<Option key={index} value={tag}>{tag}</Option>);
+    });
+  }
+
+  handleChange = (value) => {
+    this.setState({selectedTag: value});
+  }
+
   render() {
     return (
       <div
-        className="addTask"
         id="exampleModalCenter"
         tabIndex="-1"
         role="dialog"
         aria-labelledby="exampleModalCenterTitle"
         aria-hidden="true"
       >
-        <div className="modal-dialog modal-dialog-centered" role="document">
+        <div className="modal-dialog modal-dialog-centered updatePost" role="document">
           <div className="modal-content">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">
@@ -91,21 +112,8 @@ class FormUpdatePost extends Component {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="dateCreate">Date Create:</label>
-                  <input
-                    type="text"
-                    name="dateCreate"
-                    id="dateCreate"
-                    className="form-control"
-                    placeholder="Enter name"
-                    aria-describedby="helpId"
-                    onChange={this.onHandleChange}
-                    value={this.state.dateCreate}
-                  />
-                </div>
-                <div className="form-group">
                   <label htmlFor="content">Content:</label>
-                  <input
+                  <textarea
                     type="text"
                     name="content"
                     id="content"
@@ -116,6 +124,9 @@ class FormUpdatePost extends Component {
                     value={this.state.content}
                   />
                 </div>
+                <Select size="large" mode="tags" style={{ width: '100%' }} placeholder="Select Tag" onChange={this.handleChange}>
+                    {children}
+                  </Select>
               </div>
               <div className="modal-footer">
                 <button
