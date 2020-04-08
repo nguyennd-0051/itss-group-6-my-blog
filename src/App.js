@@ -63,28 +63,28 @@ class App extends React.Component {
       postLists: [
         {
           id: 1,
-          title: "new title1",
+          title: "Master AI in 2 hours",
           dateCreate: new Date('December 17, 2018 03:24:00').toLocaleString('ja-JP',dateFormat),
           content: exampleContent1,
           selectedTag: ["React", "Blockchain","AI"],
         },
         {
           id: 2,
-          title: "new title2",
+          title: "Become BrSE - A bright future for developer",
           dateCreate: new Date('January 14, 2020 09:40:00').toLocaleString('ja-JP',dateFormat),
           content: exampleContent2,
           selectedTag: ["React"],
         },
         {
           id: 3,
-          title: "new title3",
+          title: "PHP in a nutshell",
           dateCreate: new Date('February 17, 2020 08:24:00').toLocaleString('ja-JP',dateFormat),
           content: exampleContent3,
-          selectedTag: ["Blockchain"],
+          selectedTag: ["Blockchain","PHP"],
         },
         {
           id: 4,
-          title: "new title3",
+          title: "Deep Learning for beginner",
           dateCreate: new Date('March 11, 2020 09:14:00').toLocaleString('ja-JP',dateFormat),
           content: exampleContent4,
           selectedTag: ["AI","BrSE"],
