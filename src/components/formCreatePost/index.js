@@ -88,7 +88,7 @@ class FormCreatePost extends Component{
                       value={this.state.title}
                     />
                     <label htmlFor="name">Content:</label>
-                    <input
+                    <textarea
                       type="text"
                       name="content"
                       id="content"
