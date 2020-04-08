@@ -51,17 +51,7 @@ class PersonalInfo extends Component {
     return (
       <div>
         {!this.state.isUpdateInfo ? (
-          <Button type="primary" onClick={this.onClickEdit}>
-            Edit
-          </Button>
-        ) : (
-          <Button type="default" danger onClick={this.onClickCancel}>
-            Cancel
-          </Button>
-        )}
-
-        {!this.state.isUpdateInfo ? (
-          <Form title="User Information" {...layout}>
+          <Form style={{ padding: '0 200px', marginTop: 60}} title="User Information" {...layout}>
             <Form.Item label="Name">{this.state.userInfo.name}</Form.Item>
             <Form.Item label="Age">{this.state.userInfo.age}</Form.Item>
             <Form.Item label="Position">
@@ -78,6 +68,15 @@ class PersonalInfo extends Component {
             userInfo={this.state.userInfo}
             onFinish={this.onFinish}
           />
+        )}
+        {!this.state.isUpdateInfo ? (
+          <Button type="primary" onClick={this.onClickEdit}>
+            Edit
+          </Button>
+        ) : (
+          <Button type="default" danger onClick={this.onClickCancel}>
+            Cancel
+          </Button>
         )}
       </div>
     );

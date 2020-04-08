@@ -35,7 +35,7 @@ class FormUpdateInfo extends Component {
 
   render() {
     return (
-      <div>
+      <div style={{ padding: '0 200px', marginTop: 60}}>
         <Form
           {...layout}
           name="control-ref"
