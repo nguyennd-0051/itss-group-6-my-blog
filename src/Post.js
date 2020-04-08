@@ -37,7 +37,6 @@ class Post extends Component {
       ...props
     } = this.props;
 
-  
     return (
       <PageHeader
       style={{boxShadow: "5px 5px 20px rgba(0,0,0,0.12), 1px 1px 2px rgba(0,0,0,0.24)", margin: 20, background: "#fff"

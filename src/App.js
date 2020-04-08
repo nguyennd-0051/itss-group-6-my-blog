@@ -6,6 +6,7 @@ import FormUpdateInfo from "./views/FormUpdateInfo"
 import PersonalInfo from "./views/PersonalInfo"
 import Post from "./Post"
 import "./App.css";
+
 import { Layout, Menu, Carousel, Avatar, Row, Col, Tag } from 'antd';
 import {
   UserOutlined,
@@ -34,6 +35,7 @@ const exampleContent3 =
 `One of the more popular frugal blogs in the UK, Miss Thrifty is targeting young mums with her money saving, frugal tips and articles. And rightly so! The market is massive and she’s meeting a need for this type of information. Young mums aren’t exactly rolling in cash. They may have had to give up work and are now relying on just one wage coming in, so the need to be more frugal with everyday living is a must.
 
 The great thing about this blog is the conversational tone and the real person behind the brand. I think it’s inspiring to other mums to see someone like them making such a difference in other people’s lives by creating amazingly useful content that is 100% actionable. Also it may inspire mums to set up their own blog and to write about their experiences as a mother and a wife in the 21st century.`
+
 const { Header, Content, Footer } = Layout;
 const dateFormat = {year: 'numeric', month: 'long', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 class App extends React.Component {
@@ -49,7 +51,7 @@ class App extends React.Component {
         hobby: "Reading Books, Travel"
       },
       tagList: ["All","React","Blockchain"],
-      filterTagList: ["All"],
+
       isAddTag: false,
       isUpdatePost: false,
       isCreatePost: true,
@@ -58,8 +60,10 @@ class App extends React.Component {
         {
           id: 1,
           title: "new title1",
+
           dateCreate: new Date('December 17, 2018 03:24:00').toLocaleString('ja-JP',dateFormat),
           content: exampleContent1,
+
           selectedTag: ["React", "Blockchain"],
         },
         {
@@ -108,6 +112,7 @@ class App extends React.Component {
     }
     this.setState({ filterTagList: nextSelectedTags });
   }
+
 
   onToggleAddTag = () => {
     let result = null;
@@ -179,6 +184,14 @@ class App extends React.Component {
       currentPage: 'index'
     });
   };
+  // updateTagList = (value) => {
+  //   let newTagList = [...new Set([...this.state.tagList, ...value.selectedTag])];
+  //   console.log(newTagList);
+  //   console.log(value.selectedTag);
+  //   this.setState({
+  //     tagList: newTagList,
+  //   })
+  // }
 
   onToggleFormUpdatePost = () => {
     let result = null;
