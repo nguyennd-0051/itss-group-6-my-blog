@@ -181,7 +181,7 @@ class FormCreatePost extends EditableTagGroup{
                     value={this.state.datecreate}
                   />
                   <label htmlFor="name">Content:</label>
-                  <input
+                  <textarea
                     type="text"
                     name="content"
                     id="content"
