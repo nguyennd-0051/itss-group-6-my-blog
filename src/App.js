@@ -2,9 +2,11 @@ import React from "react";
 import AddTag from "./components/addTag";
 import FormUpdatePost from "./components/formUpdatePost";
 import FormCreatePost from "./components/formCreatePost";
-import FormUpdateInfo from "./views/FormUpdateInfo"
-import PersonalInfo from "./views/PersonalInfo"
-import Post from "./Post"
+import FormUpdateInfo from "./views/FormUpdateInfo";
+import PersonalInfo from "./views/PersonalInfo";
+import Post from "./Post";
+import TagList from "./TagList";
+import NavBar from "./NavBar";
 import "./App.css";
 import { Layout, Menu, Carousel, Avatar, Row, Col, Tag } from 'antd';
 import {
@@ -12,7 +14,7 @@ import {
   EditOutlined,
   GitlabOutlined,
 } from '@ant-design/icons';
-import TagList from "./TagList";
+
 
 const { CheckableTag } = Tag;
 const exampleContent1 = 
@@ -96,6 +98,7 @@ class App extends React.Component {
     this.onUpdatePersonalInfo = this.onUpdatePersonalInfo.bind(this);
     this.handleCreatePost = this.handleCreatePost.bind(this);
     this.handleChangeFilterTag = this.handleChangeFilterTag.bind(this);
+    this.onClickChangePage = this.onClickChangePage.bind(this);
   }
 
   onUpdatePersonalInfo(newInfo) {
@@ -261,11 +264,15 @@ class App extends React.Component {
   render() {
     return (
       <Layout className="layout" style={{background: "#fff"}}> 
-        <Menu theme="light" onClick={this.onClickChangePage} selectedKeys={[this.state.currentPage]} mode="horizontal" style={{ position: 'fixed', zIndex: 1, width: '100%', height: 50 }}>
+        {/* <Menu theme="light" onClick={this.onClickChangePage} selectedKeys={[this.state.currentPage]} mode="horizontal" style={{ position: 'fixed', zIndex: 1, width: '100%', height: 50 }}>
           <Menu.Item key="index"><GitlabOutlined />My Blog</Menu.Item>
           <Menu.Item key="create" style={{float: 'right'}}><EditOutlined />Create Post</Menu.Item>
           <Menu.Item key="profile" style={{float: 'right'}}><UserOutlined />My Profile</Menu.Item>
-        </Menu>
+        </Menu> */}
+        <NavBar
+        currentPage = {this.state.currentPage}
+        onClickChangePage = {this.onClickChangePage}
+        />
         {this.state.currentPage == 'index' ? 
           <>
           <Carousel style={{ marginTop: 50 }} >
